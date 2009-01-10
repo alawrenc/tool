@@ -57,7 +57,7 @@ public class FileSet extends AbstractDataSet {
     public FileSet(DataSource src, int i, String path, String name) {
         super(src, i, path);
         fpath = new File(path);
-
+	
         frms = new Vector<File>();
 		
         loadFrmPaths();
@@ -67,9 +67,10 @@ public class FileSet extends AbstractDataSet {
     private void loadFrmPaths() {
         if (!fpath.exists())
             fpath.mkdir();
-
-        for (File f : fpath.listFiles(FrameLoader.FILTER))
-            frms.add(f);
+	if (null != fpath.listFiles(FrameLoader.FILTER)){
+	    for (File f : fpath.listFiles(FrameLoader.FILTER))
+		frms.add(f);
+	}
 
         Collections.sort(frms, FileComparator.NumericalOrder_F);
 		
