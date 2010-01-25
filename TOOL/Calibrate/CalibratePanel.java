@@ -46,7 +46,8 @@ public class CalibratePanel extends JPanel implements DataListener, KeyListener,
                                                       MouseWheelListener{
 
     private ColorSwatchPanel colorSwatches;
-    private JCheckBox undefineSpecific, smallTableMode;
+    private JCheckBox undefineSpecific, smallTableMode, displayJoints;
+    private JointsViewer jointsViewer;
     private ThreshSlider thresh;
     private JButton fillHoles, undo, redo, prevImage,
 		nextImage, jumpToButton, skipForward, skipBack;
@@ -126,6 +127,10 @@ public class CalibratePanel extends JPanel implements DataListener, KeyListener,
         undefineSpecific = new JCheckBox("Undefine color");
         undefineSpecific.setAlignmentX(Component.CENTER_ALIGNMENT);
         undefineSpecific.setFocusable(false);
+
+        displayJoints = new JCheckBox("display joints");
+        displayJoints.setAlignmentX(Component.CENTER_ALIGNMENT);
+        displayJoints.setFocusable(false);
 
         thresh = new ThreshSlider(calibrate);
         thresh.setFocusable(false);
@@ -223,6 +228,7 @@ public class CalibratePanel extends JPanel implements DataListener, KeyListener,
                                                 BoxLayout.Y_AXIS));
         textAndSwatches.add(feedback);
         textAndSwatches.add(undefineSpecific);
+        textAndSwatches.add(displayJoints);
         textAndSwatches.add(colorSwatches);
 		JPanel auxPanel = new JPanel();
 		auxPanel.add(drawColors);
@@ -307,6 +313,11 @@ public class CalibratePanel extends JPanel implements DataListener, KeyListener,
                     undefineSpecific.doClick();
                 }
             });
+        // am.put("displayJoints", new AbstractAction("joints") {
+        //         public void actionPerformed(ActionEvent e) {
+        //             displayJoints.doClick();
+        //         }
+        //     });
         am.put("edgeThresh", new AbstractAction("edgeThresh") {
                 public void actionPerformed(ActionEvent e) {
                     thresh.clickEnabled();
@@ -354,13 +365,24 @@ public class CalibratePanel extends JPanel implements DataListener, KeyListener,
                 }
             });
 
-
-
         undefineSpecific.addActionListener(new ActionListener(){
                 public void actionPerformed(ActionEvent e) {
                     calibrate.setUndefine(undefineSpecific.isSelected());
                     colorSwatches.setCrossedOut(undefineSpecific.isSelected());
                     colorSwatches.repaint();
+                }
+            });
+
+        displayJoints.addActionListener(new ActionListener(){
+                public void actionPerformed(ActionEvent e) {
+                    //if (displayJoints.isSelected()){
+                    //    displayJoints.setSelected(false);
+                    //    jointsViewer.dispose();
+                    //}
+                    //else {//pop up a window with joint values
+                        jointsViewer = new JointsViewer();
+                        //    displayJoints.setSelected(true);
+                        //}
                 }
             });
 
