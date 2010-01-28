@@ -129,7 +129,7 @@ public class CalibratePanel extends JPanel implements DataListener, KeyListener,
         undefineSpecific.setFocusable(false);
 
         displayJoints = new JCheckBox("display joints");
-        displayJoints.setAlignmentX(Component.CENTER_ALIGNMENT);
+        displayJoints.setAlignmentX(Component.RIGHT_ALIGNMENT);
         displayJoints.setFocusable(false);
 
         thresh = new ThreshSlider(calibrate);
@@ -313,11 +313,7 @@ public class CalibratePanel extends JPanel implements DataListener, KeyListener,
                     undefineSpecific.doClick();
                 }
             });
-        // am.put("displayJoints", new AbstractAction("joints") {
-        //         public void actionPerformed(ActionEvent e) {
-        //             displayJoints.doClick();
-        //         }
-        //     });
+
         am.put("edgeThresh", new AbstractAction("edgeThresh") {
                 public void actionPerformed(ActionEvent e) {
                     thresh.clickEnabled();
@@ -375,14 +371,13 @@ public class CalibratePanel extends JPanel implements DataListener, KeyListener,
 
         displayJoints.addActionListener(new ActionListener(){
                 public void actionPerformed(ActionEvent e) {
-                    //if (displayJoints.isSelected()){
-                    //    displayJoints.setSelected(false);
-                    //    jointsViewer.dispose();
-                    //}
-                    //else {//pop up a window with joint values
+                    if (displayJoints.isSelected()){
                         jointsViewer = new JointsViewer();
-                        //    displayJoints.setSelected(true);
-                        //}
+                    }
+                    else {//pop up a window with joint values
+                        displayJoints.setSelected(false);
+                        jointsViewer.dispose();
+                    }
                 }
             });
 
@@ -608,6 +603,11 @@ public class CalibratePanel extends JPanel implements DataListener, KeyListener,
         }
     }
 
+    public void updateJoints(Frame f){
+        if (jointsViewer != null){
+            jointsViewer.update(f);
+        }
+    }
 
     class SetColorSwatchAction extends AbstractAction {
         private int i;

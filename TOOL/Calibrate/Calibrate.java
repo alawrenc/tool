@@ -1103,10 +1103,11 @@ public class Calibrate implements DataListener, MouseListener,
         selector.updateImage(rawImage);
         calibratePanel.setSelectorOverlay();
 
-	visionState.update();
-	calibratePanel.setDisplayerOverlay();
-	displayer.updateImage(thresholdedImage);
-	
+        calibratePanel.updateJoints(currentFrame);
+        calibratePanel.setDisplayerOverlay();
+        visionState.update();
+            displayer.updateImage(thresholdedImage);
+
         selector.repaint();
         displayer.repaint();
 
