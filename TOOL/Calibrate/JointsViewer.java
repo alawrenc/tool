@@ -80,7 +80,6 @@ public class JointsViewer extends JFrame {
     }
 
     protected void update(Frame f) {
-        System.out.println("update being called");
         List<Float> joints = f.joints();
         for (int i = 0; i < NUM_JOINTS; i++) {
             JLabel jointValue = (JLabel)framePanel.getComponent(2*i+1);
